@@ -68,7 +68,7 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_MODULE:= libui
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
 
 
 # Include subdirectory makefiles

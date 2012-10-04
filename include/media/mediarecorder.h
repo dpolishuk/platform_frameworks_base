@@ -29,8 +29,6 @@ namespace android {
 
 class Surface;
 class IMediaRecorder;
-class ICamera;
-class ICameraRecordingProxy;
 class ISurfaceTexture;
 class SurfaceTextureClient;
 
@@ -206,7 +204,6 @@ public:
 
     void        died();
     status_t    initCheck();
-    status_t    setCamera(const sp<ICamera>& camera, const sp<ICameraRecordingProxy>& proxy);
     status_t    setPreviewSurface(const sp<Surface>& surface);
     status_t    setVideoSource(int vs);
     status_t    setAudioSource(int as);

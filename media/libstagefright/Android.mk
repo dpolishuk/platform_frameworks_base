@@ -7,23 +7,14 @@ LOCAL_SRC_FILES:=                         \
         ACodec.cpp                        \
         AACExtractor.cpp                  \
         AACWriter.cpp                     \
-        AMRExtractor.cpp                  \
-        AMRWriter.cpp                     \
         AudioPlayer.cpp                   \
         AudioSource.cpp                   \
         AwesomePlayer.cpp                 \
-        CameraSource.cpp                  \
-        CameraSourceTimeLapse.cpp         \
         VideoSourceDownSampler.cpp        \
         DataSource.cpp                    \
-        DRMExtractor.cpp                  \
         ESDS.cpp                          \
         FileSource.cpp                    \
-        FLACExtractor.cpp                 \
         HTTPBase.cpp                      \
-        JPEGSource.cpp                    \
-        MP3Extractor.cpp                  \
-        MPEG2TSWriter.cpp                 \
         MPEG4Extractor.cpp                \
         MPEG4Writer.cpp                   \
         MediaBuffer.cpp                   \
@@ -36,7 +27,6 @@ LOCAL_SRC_FILES:=                         \
         NuCachedSource2.cpp               \
         OMXClient.cpp                     \
         OMXCodec.cpp                      \
-        OggExtractor.cpp                  \
         SampleIterator.cpp                \
         SampleTable.cpp                   \
         StagefrightMediaScanner.cpp       \
@@ -47,8 +37,6 @@ LOCAL_SRC_FILES:=                         \
         TimedEventQueue.cpp               \
         Utils.cpp                         \
         VBRISeeker.cpp                    \
-        WAVExtractor.cpp                  \
-        WVMExtractor.cpp                  \
         XINGSeeker.cpp                    \
         avc_utils.cpp                     \
 
@@ -152,6 +140,6 @@ LOCAL_CFLAGS += -Wno-multichar
 
 LOCAL_MODULE:= libstagefright
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))

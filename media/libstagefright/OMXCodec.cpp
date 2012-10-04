@@ -71,12 +71,6 @@ static sp<MediaSource> Make##name(const sp<MediaSource> &source, const sp<MetaDa
 
 #define FACTORY_REF(name) { #name, Make##name },
 
-FACTORY_CREATE_ENCODER(AMRNBEncoder)
-FACTORY_CREATE_ENCODER(AMRWBEncoder)
-FACTORY_CREATE_ENCODER(AACEncoder)
-FACTORY_CREATE_ENCODER(AVCEncoder)
-FACTORY_CREATE_ENCODER(M4vH263Encoder)
-
 static sp<MediaSource> InstantiateSoftwareEncoder(
         const char *name, const sp<MediaSource> &source,
         const sp<MetaData> &meta) {
@@ -85,13 +79,7 @@ static sp<MediaSource> InstantiateSoftwareEncoder(
         sp<MediaSource> (*CreateFunc)(const sp<MediaSource> &, const sp<MetaData> &);
     };
 
-    static const FactoryInfo kFactoryInfo[] = {
-        FACTORY_REF(AMRNBEncoder)
-        FACTORY_REF(AMRWBEncoder)
-        FACTORY_REF(AACEncoder)
-        FACTORY_REF(AVCEncoder)
-        FACTORY_REF(M4vH263Encoder)
-    };
+    static const FactoryInfo kFactoryInfo[] = {};
     for (size_t i = 0;
          i < sizeof(kFactoryInfo) / sizeof(kFactoryInfo[0]); ++i) {
         if (!strcmp(name, kFactoryInfo[i].name)) {

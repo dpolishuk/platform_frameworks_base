@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-#include "include/AMRExtractor.h"
 #include "include/MP3Extractor.h"
 #include "include/MPEG4Extractor.h"
-#include "include/WAVExtractor.h"
-#include "include/OggExtractor.h"
-#include "include/MPEG2PSExtractor.h"
-#include "include/MPEG2TSExtractor.h"
 #include "include/NuCachedSource2.h"
 #include "include/HTTPBase.h"
-#include "include/DRMExtractor.h"
-#include "include/FLACExtractor.h"
 #include "include/AACExtractor.h"
-
-#include "matroska/MatroskaExtractor.h"
 
 #include <media/stagefright/foundation/AMessage.h>
 #include <media/stagefright/DataSource.h>
@@ -104,21 +95,7 @@ void DataSource::RegisterSniffer(SnifferFunc func) {
 // static
 void DataSource::RegisterDefaultSniffers() {
     RegisterSniffer(SniffMPEG4);
-    RegisterSniffer(SniffMatroska);
-    RegisterSniffer(SniffOgg);
-    RegisterSniffer(SniffWAV);
-    RegisterSniffer(SniffFLAC);
-    RegisterSniffer(SniffAMR);
-    RegisterSniffer(SniffMPEG2TS);
-    RegisterSniffer(SniffMP3);
     RegisterSniffer(SniffAAC);
-    RegisterSniffer(SniffMPEG2PS);
-
-    char value[PROPERTY_VALUE_MAX];
-    if (property_get("drm.service.enabled", value, NULL)
-            && (!strcmp(value, "1") || !strcasecmp(value, "true"))) {
-        RegisterSniffer(SniffDRM);
-    }
 }
 
 // static

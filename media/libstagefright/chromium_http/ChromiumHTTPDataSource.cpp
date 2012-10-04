@@ -35,9 +35,7 @@ ChromiumHTTPDataSource::ChromiumHTTPDataSource(uint32_t flags)
       mDelegate(new SfDelegate),
       mCurrentOffset(0),
       mIOResult(OK),
-      mContentSize(-1),
-      mDecryptHandle(NULL),
-      mDrmManagerClient(NULL) {
+      mContentSize(-1) {
     mDelegate->setOwner(this);
 }
 
@@ -46,13 +44,6 @@ ChromiumHTTPDataSource::~ChromiumHTTPDataSource() {
 
     delete mDelegate;
     mDelegate = NULL;
-
-    clearDRMState_l();
-
-    if (mDrmManagerClient != NULL) {
-        delete mDrmManagerClient;
-        mDrmManagerClient = NULL;
-    }
 }
 
 status_t ChromiumHTTPDataSource::connect(
@@ -259,41 +250,6 @@ void ChromiumHTTPDataSource::onDisconnectComplete() {
     mCondition.broadcast();
 }
 
-sp<DecryptHandle> ChromiumHTTPDataSource::DrmInitialization() {
-    Mutex::Autolock autoLock(mLock);
-
-    if (mDrmManagerClient == NULL) {
-        mDrmManagerClient = new DrmManagerClient();
-    }
-
-    if (mDrmManagerClient == NULL) {
-        return NULL;
-    }
-
-    if (mDecryptHandle == NULL) {
-        /* Note if redirect occurs, mUri is the redirect uri instead of the
-         * original one
-         */
-        mDecryptHandle = mDrmManagerClient->openDecryptSession(
-                String8(mURI.c_str()));
-    }
-
-    if (mDecryptHandle == NULL) {
-        delete mDrmManagerClient;
-        mDrmManagerClient = NULL;
-    }
-
-    return mDecryptHandle;
-}
-
-void ChromiumHTTPDataSource::getDrmInfo(
-        sp<DecryptHandle> &handle, DrmManagerClient **client) {
-    Mutex::Autolock autoLock(mLock);
-
-    handle = mDecryptHandle;
-    *client = mDrmManagerClient;
-}
-
 String8 ChromiumHTTPDataSource::getUri() {
     Mutex::Autolock autoLock(mLock);
 
@@ -304,15 +260,6 @@ String8 ChromiumHTTPDataSource::getMIMEType() const {
     Mutex::Autolock autoLock(mLock);
 
     return mContentType;
-}
-
-void ChromiumHTTPDataSource::clearDRMState_l() {
-    if (mDecryptHandle != NULL) {
-        // To release mDecryptHandle
-        CHECK(mDrmManagerClient);
-        mDrmManagerClient->closeDecryptSession(mDecryptHandle);
-        mDecryptHandle = NULL;
-    }
 }
 
 status_t ChromiumHTTPDataSource::reconnectAtOffset(off64_t offset) {

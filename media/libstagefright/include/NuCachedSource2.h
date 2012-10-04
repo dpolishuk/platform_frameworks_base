@@ -40,8 +40,6 @@ struct NuCachedSource2 : public DataSource {
     virtual status_t getSize(off64_t *size);
     virtual uint32_t flags();
 
-    virtual sp<DecryptHandle> DrmInitialization();
-    virtual void getDrmInfo(sp<DecryptHandle> &handle, DrmManagerClient **client);
     virtual String8 getUri();
 
     virtual String8 getMIMEType() const;

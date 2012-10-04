@@ -228,14 +228,7 @@ private:
     sp<HTTPBase> mConnectingDataSource;
     sp<NuCachedSource2> mCachedSource;
 
-    DrmManagerClient *mDrmManagerClient;
-    sp<DecryptHandle> mDecryptHandle;
-
     int64_t mLastVideoTimeUs;
-    TimedTextPlayer *mTextPlayer;
-    mutable Mutex mTimedTextLock;
-
-    sp<WVMExtractor> mWVMExtractor;
 
     status_t setDataSource_l(
             const char *uri,

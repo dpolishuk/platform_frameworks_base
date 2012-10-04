@@ -20,7 +20,6 @@
 #include <utils/Log.h>
 #include <binder/Parcel.h>
 #include <surfaceflinger/Surface.h>
-#include <camera/ICamera.h>
 #include <media/IMediaRecorderClient.h>
 #include <media/IMediaRecorder.h>
 #include <gui/ISurfaceTexture.h>
@@ -60,17 +59,6 @@ public:
     BpMediaRecorder(const sp<IBinder>& impl)
     : BpInterface<IMediaRecorder>(impl)
     {
-    }
-
-    status_t setCamera(const sp<ICamera>& camera, const sp<ICameraRecordingProxy>& proxy)
-    {
-        ALOGV("setCamera(%p,%p)", camera.get(), proxy.get());
-        Parcel data, reply;
-        data.writeInterfaceToken(IMediaRecorder::getInterfaceDescriptor());
-        data.writeStrongBinder(camera->asBinder());
-        data.writeStrongBinder(proxy->asBinder());
-        remote()->transact(SET_CAMERA, data, &reply);
-        return reply.readInt32();
     }
 
     sp<ISurfaceTexture> querySurfaceMediaSource()
@@ -428,15 +416,6 @@ status_t BnMediaRecorder::onTransact(
             CHECK_INTERFACE(IMediaRecorder, data, reply);
             sp<Surface> surface = Surface::readFromParcel(data);
             reply->writeInt32(setPreviewSurface(surface));
-            return NO_ERROR;
-        } break;
-        case SET_CAMERA: {
-            ALOGV("SET_CAMERA");
-            CHECK_INTERFACE(IMediaRecorder, data, reply);
-            sp<ICamera> camera = interface_cast<ICamera>(data.readStrongBinder());
-            sp<ICameraRecordingProxy> proxy =
-                interface_cast<ICameraRecordingProxy>(data.readStrongBinder());
-            reply->writeInt32(setCamera(camera, proxy));
             return NO_ERROR;
         } break;
         case QUERY_SURFACE_MEDIASOURCE: {

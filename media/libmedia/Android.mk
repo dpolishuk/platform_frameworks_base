@@ -63,4 +63,4 @@ LOCAL_C_INCLUDES := \
     external/expat/lib \
     system/media/audio_effects/include
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)

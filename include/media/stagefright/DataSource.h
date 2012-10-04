@@ -80,12 +80,6 @@ public:
     static void RegisterSniffer(SnifferFunc func);
     static void RegisterDefaultSniffers();
 
-    // for DRM
-    virtual sp<DecryptHandle> DrmInitialization() {
-        return NULL;
-    }
-    virtual void getDrmInfo(sp<DecryptHandle> &handle, DrmManagerClient **client) {};
-
     virtual String8 getUri() {
         return String8();
     }

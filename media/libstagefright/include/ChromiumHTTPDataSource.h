@@ -43,10 +43,6 @@ struct ChromiumHTTPDataSource : public HTTPBase {
     virtual status_t getSize(off64_t *size);
     virtual uint32_t flags();
 
-    virtual sp<DecryptHandle> DrmInitialization();
-
-    virtual void getDrmInfo(sp<DecryptHandle> &handle, DrmManagerClient **client);
-
     virtual String8 getUri();
 
     virtual String8 getMIMEType() const;
@@ -89,9 +85,6 @@ private:
 
     String8 mContentType;
 
-    sp<DecryptHandle> mDecryptHandle;
-    DrmManagerClient *mDrmManagerClient;
-
     void disconnect_l();
 
     status_t connect_l(
@@ -110,8 +103,6 @@ private:
     void onConnectionFailed(status_t err);
     void onReadCompleted(ssize_t size);
     void onDisconnectComplete();
-
-    void clearDRMState_l();
 
     DISALLOW_EVIL_CONSTRUCTORS(ChromiumHTTPDataSource);
 };
